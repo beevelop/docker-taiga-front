@@ -43,3 +43,6 @@ requests will be redirected to *https* (port 443).
 ## Debugging
 * ``DEBUG_ENTRYPOINT``: set to True to enable Debugging (`set -x`)
 * ``DEBUG`` defaults to ``false``
+
+## Docker-Compose
+{% gist 1975674c22ce8948c895 %}
