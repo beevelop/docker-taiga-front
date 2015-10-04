@@ -1,72 +1,58 @@
-taidb:
+data:
+  image: tianon/true
+  volumes:
+    - /var/lib/postgresql/data
+    - /usr/local/taiga/media
+    - /usr/local/taiga/static
+    - /usr/local/taiga/logs
+taigadb:
   image: postgres
   environment:
     POSTGRES_USER: taiga
-    POSTGRES_PASSWORD: password
-taiback:
+    POSTGRES_PASSWORD: Un1c0rn
+  volumes_from:
+    - data
+taigaback:
   image: beevelop/taiga-back
-  hostname: lab.bee.pw
+  hostname: taiga.example.com
   environment:
-    SECRET_KEY: examplesecretkey
-    PUBLIC_REGISTER_ENABLED: False
-    FEEDBACK_ENABLED: False
-    FEEDBACK_EMAIL: m@ikhummel.com
+    SECRET_KEY: Un1c0rns_4r3_4w3s0m3
+
+    PUBLIC_REGISTER_ENABLED: True
+    FEEDBACK_ENABLED: True
+    FEEDBACK_EMAIL: unicorn@example.com
     STATS_ENABLED: False
 
     FRONT_SITEMAP_ENABLED: True
 
     SAMPLE_DATA: False
 
-    #DEBUG_ENTRYPOINT: True
-    #DEBUG: True
-    #TEMPLATE_DEBUG: True
+    DEBUG_ENTRYPOINT: True
+    DEBUG: True
+    TEMPLATE_DEBUG: True
 
-    #EMAIL_USE_TLS: True
-    #EMAIL_HOST: smtp.gmail.com
-    #EMAIL_PORT: 587
-    #EMAIL_HOST_USER: youremail@gmail.com
-    #EMAIL_HOST_PASSWORD: yourpassword
-    #DEFAULT_FROM_EMAIL defaults to "no-reply@example.com"
+    EMAIL_USE_TLS: True
+    EMAIL_HOST: smtp.gmail.com
+    EMAIL_PORT: 587
+    EMAIL_HOST_USER: unicorn@gmail.com
+    EMAIL_HOST_PASSWORD: yourpassword
+    DEFAULT_FROM_EMAIL: noreply@taiga.example.com
   links:
-    - taidb:postgres
-taifront:
-  build: .
-  hostname: lab.bee.pw
+    - taigadb:postgres
+  volumes_from:
+    - data
+taigafront:
+  image: beevelop/taiga-front
+  hostname: taiga.example.com
   environment:
-    DEFAULT_LANGUAGE: "en"
-    DEFAULT_THEME: "material-design"
-    PRIVACY_POLICY_URL: https://beevelop.com/privacy_policy
-    TERMS_OF_SERVICE_URL: https://beevelop.com/tos
-    #DEBUG_ENTRYPOINT: "true"
-    #DEBUG: "false"
+    DEFAULT_LANGUAGE: en
+    PRIVACY_POLICY_URL: https://taiga.example.com/privacy_policy
+    TERMS_OF_SERVICE_URL: https://taiga.example.com/tos
+    DEBUG_ENTRYPOINT: True
+    DEBUG: False
   links:
-    - taiback:taigaback
+    - taigaback:taigaback
+  volumes_from:
+    - data
   ports:
-    - 0.0.0.0:8080:80
-
-
-## Front
-## Environment
-# GITHUB_API_CLIENT_ID: provide a GitHub API ID to enable GitHub OAuth
-
-# API defaults to ``"/api/v1"``
-# SCHEME`` defaults to ``http``. If ``https`` is used either
-#   SSL_CRT`` and ``SSL_KEY`` needs to be set **or**
-#   /etc/nginx/ssl/`` volume attached with ``ssl.crt`` and ``ssl.key`` files
-# SSL_CRT`` SSL certificate value. Valid only when ``SCHEME`` set to https.
-# SSL_KEY`` SSL certificate key. Valid only when ``SCHEME`` set to https.
-
-## Back
-# MEDIA_URL defaults to "$API_SCHEME://$HOSTNAME/media/"
-# STATIC_URL defaults to "$API_SCHEME://$HOSTNAME/media/"
-
-# API_SCHEME defaults to "http". Use https if htdvisser/taiga-front-dist is used and SSL enabled.
-# API_DOMAIN defaults to "$HOSTNAME"
-# FRONT_SCHEME defaults to "http". Use https if htdvisser/taiga-front-dist is used and SSL enabled.
-# FRONT_DOMAIN defaults to "$HOSTNAME"
-
-# DB_HOST
-# DB_USER
-# DB_NAME
-# DB_PASS
-# DB_PORT (default: 5432)
+    - 0.0.0.0:80:80
