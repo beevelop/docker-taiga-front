@@ -6,13 +6,14 @@
 This Docker image can be used for running the Taiga frontend. It works together with the [beevelop/taiga-back](https://registry.hub.docker.com/u/beevelop/taiga-back/) image.
 
 ## Running
-
 A [beevelop/taiga-back](https://registry.hub.docker.com/u/beevelop/taiga-back/) needs to be linked as `taigaback`.
 Also connect the volumes of the taiga-back container if you want to serve the static files for the admin panel.
 
 ```bash
 docker run --name taiga_front_container --link taiga_back_container:taigaback --volumes-from taiga_back_container beevelop/taiga-front
 ```
+
+## [Docker-Compose](https://gist.github.com/beevelop/1975674c22ce8948c895#file-docker-compose-yml)
 
 ## Environment
 * `PUBLIC_REGISTER_ENABLED`: defaults to the respective **Taiga-Back** configuration or `true`
@@ -43,6 +44,3 @@ requests will be redirected to *https* (port 443).
 ## Debugging
 * ``DEBUG_ENTRYPOINT``: set to True to enable Debugging (`set -x`)
 * ``DEBUG`` defaults to ``false``
-
-## Docker-Compose
-{% gist 1975674c22ce8948c895 %}
