@@ -1,0 +1,72 @@
+taidb:
+  image: postgres
+  environment:
+    POSTGRES_USER: taiga
+    POSTGRES_PASSWORD: password
+taiback:
+  image: beevelop/taiga-back
+  hostname: lab.bee.pw
+  environment:
+    SECRET_KEY: examplesecretkey
+    PUBLIC_REGISTER_ENABLED: False
+    FEEDBACK_ENABLED: False
+    FEEDBACK_EMAIL: m@ikhummel.com
+    STATS_ENABLED: False
+
+    FRONT_SITEMAP_ENABLED: True
+
+    SAMPLE_DATA: False
+
+    #DEBUG_ENTRYPOINT: True
+    #DEBUG: True
+    #TEMPLATE_DEBUG: True
+
+    #EMAIL_USE_TLS: True
+    #EMAIL_HOST: smtp.gmail.com
+    #EMAIL_PORT: 587
+    #EMAIL_HOST_USER: youremail@gmail.com
+    #EMAIL_HOST_PASSWORD: yourpassword
+    #DEFAULT_FROM_EMAIL defaults to "no-reply@example.com"
+  links:
+    - taidb:postgres
+taifront:
+  build: .
+  hostname: lab.bee.pw
+  environment:
+    DEFAULT_LANGUAGE: "en"
+    DEFAULT_THEME: "material-design"
+    PRIVACY_POLICY_URL: https://beevelop.com/privacy_policy
+    TERMS_OF_SERVICE_URL: https://beevelop.com/tos
+    #DEBUG_ENTRYPOINT: "true"
+    #DEBUG: "false"
+  links:
+    - taiback:taigaback
+  ports:
+    - 0.0.0.0:8080:80
+
+
+## Front
+## Environment
+# GITHUB_API_CLIENT_ID: provide a GitHub API ID to enable GitHub OAuth
+
+# API defaults to ``"/api/v1"``
+# SCHEME`` defaults to ``http``. If ``https`` is used either
+#   SSL_CRT`` and ``SSL_KEY`` needs to be set **or**
+#   /etc/nginx/ssl/`` volume attached with ``ssl.crt`` and ``ssl.key`` files
+# SSL_CRT`` SSL certificate value. Valid only when ``SCHEME`` set to https.
+# SSL_KEY`` SSL certificate key. Valid only when ``SCHEME`` set to https.
+
+## Back
+# MEDIA_URL defaults to "$API_SCHEME://$HOSTNAME/media/"
+# STATIC_URL defaults to "$API_SCHEME://$HOSTNAME/media/"
+
+# API_SCHEME defaults to "http". Use https if htdvisser/taiga-front-dist is used and SSL enabled.
+# API_DOMAIN defaults to "$HOSTNAME"
+# FRONT_SCHEME defaults to "http". Use https if htdvisser/taiga-front-dist is used and SSL enabled.
+# FRONT_DOMAIN defaults to "$HOSTNAME"
+
+# DB_HOST
+# DB_USER
+# DB_NAME
+# DB_PASS
+# DB_PORT (default: 5432)

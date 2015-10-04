@@ -1,0 +1,17 @@
+{
+  "api": "${API}",
+  "eventsUrl": null,
+  "debug": ${DEBUG},
+  "debugInfo": false,
+  "defaultLanguage": "${DEFAULT_LANGUAGE}",
+  "themes": ["taiga", "material-design", "high-contrast"],
+  "defaultTheme": "${DEFAULT_THEME}",
+
+  "publicRegisterEnabled": ${PUBLIC_REGISTER_ENABLED},
+  "feedbackEnabled": ${FEEDBACK_ENABLED},
+  "privacyPolicyUrl": ${PRIVACY_POLICY_URL},
+  "termsOfServiceUrl": ${TERMS_OF_SERVICE_URL},
+  "maxUploadFileSize": null,
+  "gitHubClientId": ${GITHUB_API_CLIENT_ID},
+  "contribPlugins": []
+}

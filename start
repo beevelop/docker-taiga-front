@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -ea # Exit on Error and Export all vars
+
+[[ -n $DEBUG_ENTRYPOINT ]] && set -x
+
+. ./conf.env
+
+sed -i "/include .*.conf;/c\  include ${WEB_CONFIG};" /etc/nginx/nginx.conf
+
+mkdir -p /etc/nginx/ssl
+[ ! -z "${SSL_CRT}" ] && echo "${SSL_CRT}" > /etc/nginx/ssl/ssl.crt
+[ ! -z "${SSL_KEY}" ] && echo "${SSL_KEY}" > /etc/nginx/ssl/ssl.key
+
+envsubst < conf.json > taiga-front-dist/dist/js/conf.json
+envsubst < upstream.conf > /etc/nginx/upstream.conf
+
+nginx -g "daemon off;"
