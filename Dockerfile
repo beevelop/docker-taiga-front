@@ -22,8 +22,7 @@ RUN buildDeps='curl gettext-base'; \
     mkdir taiga-front-dist && \
     curl -sL 'https://github.com/taigaio/taiga-front-dist/tarball/stable' | tar xz -C taiga-front-dist --strip-components=1 && \
     cd taiga-front-dist && \
-    chmod +x conf.env start
-    
+
     # clean up
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     apt-get purge -y --auto-remove $buildDeps && \
@@ -32,4 +31,4 @@ RUN buildDeps='curl gettext-base'; \
 
 EXPOSE 80 443
 
-CMD /usr/local/taiga/start
+CMD /bin/sh /usr/local/taiga/start
