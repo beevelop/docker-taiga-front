@@ -1,4 +1,7 @@
-[![](https://badge.imagelayers.io/beevelop/taiga-front:latest.svg)](https://imagelayers.io/?images=beevelop/taiga-front:latest 'Get your own badge on imagelayers.io')
+[![Travis](https://img.shields.io/travis/beevelop/docker-taiga-front.svg?style=flat-square)](https://travis-ci.org/beevelop/docker-taiga-front)
+[![Docker Pulls](https://img.shields.io/docker/pulls/beevelop/taiga-front.svg?style=flat-square)](https://links.beevelop.com/d-taiga-front)
+[![ImageLayer](https://badge.imagelayers.io/beevelop/taiga-front:latest.svg)](https://imagelayers.io/?images=beevelop/taiga-front:latest)
+[![Beevelop](https://links.beevelop.com/honey-badge)](https://beevelop.com)
 
 # beevelop/taiga-front (adapted from htdvisser/taiga-front-dist)
 > [Taiga](https://taiga.io/) is a project management platform for startups and agile developers & designers who want a simple, beautiful tool that makes work truly enjoyable.
