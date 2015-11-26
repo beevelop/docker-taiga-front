@@ -8,13 +8,15 @@ WORKDIR /usr/local/taiga
 ADD *.conf /etc/nginx/
 ADD mime.types /etc/nginx/mime.types
 
-ADD ./conf.json conf.json
-ADD ./conf.env conf.env
-ADD ./start start
+ADD upstream.conf.tpl 	upstream.conf
+ADD conf.json 		conf.json
+ADD conf.env 		conf.env
+ADD start		start
 
-RUN buildDeps='curl gettext-base'; \
+RUN buildDeps='curl'; \
     set -x && \
     apt-get update && apt-get install -y $buildDeps --no-install-recommends && \
+    apt-get install -y gettext-base --no-install-recommends && \
 
     # forward request and error logs to docker log collector
     ln -sf /dev/stdout /var/log/nginx/access.log && \
@@ -31,4 +33,4 @@ RUN buildDeps='curl gettext-base'; \
 
 EXPOSE 80 443
 
-CMD /bin/sh /usr/local/taiga/start
+CMD /bin/bash /usr/local/taiga/start
