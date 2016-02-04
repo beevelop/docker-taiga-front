@@ -25,6 +25,10 @@ RUN buildDeps='curl'; \
     curl -sL 'https://github.com/taigaio/taiga-front-dist/tarball/stable' | tar xz -C taiga-front-dist --strip-components=1 && \
     cd taiga-front-dist && \
 
+    # Handle case where distribution has files in arbitrary sub-directory
+    tmpSource=`find dist -type d -name js | sed -r 's|/[^/]+$|/*|'` && \
+    if [ "$tmpSource" != 'dist/*' ]; then mv $tmpSource dist/; fi && \
+
     # clean up
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     apt-get purge -y --auto-remove $buildDeps && \
