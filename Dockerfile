@@ -15,8 +15,8 @@ ADD start		start
 
 RUN buildDeps='curl'; \
     set -x && \
-    apt-get update && apt-get install -y $buildDeps --no-install-recommends && \
-    apt-get install -y gettext-base --no-install-recommends && \
+    apt-get -qq update && apt-get -qq install -y $buildDeps --no-install-recommends && \
+    apt-get -qq install -y gettext-base --no-install-recommends && \
 
     # forward request and error logs to docker log collector
     ln -sf /dev/stdout /var/log/nginx/access.log && \
