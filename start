@@ -12,7 +12,7 @@ mkdir -p /etc/nginx/ssl
 [ ! -z "${SSL_CRT}" ] && echo "${SSL_CRT}" > /etc/nginx/ssl/ssl.crt
 [ ! -z "${SSL_KEY}" ] && echo "${SSL_KEY}" > /etc/nginx/ssl/ssl.key
 
-envsubst < conf.json > taiga-front-dist/dist/js/conf.json
+envsubst < conf.json > taiga-front-dist/dist/conf.json
 envsubst < upstream.conf > /etc/nginx/upstream.conf
 
 nginx -g "daemon off;"
