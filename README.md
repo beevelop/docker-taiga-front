@@ -3,18 +3,20 @@
 [![ImageLayer](https://badge.imagelayers.io/beevelop/taiga-front:latest.svg)](https://imagelayers.io/?images=beevelop/taiga-front:latest)
 [![Beevelop](https://links.beevelop.com/honey-badge)](https://beevelop.com)
 
-# beevelop/taiga-front (adapted from htdvisser/taiga-front-dist)
+# beevelop/taiga-front
 > [Taiga](https://taiga.io/) is a project management platform for startups and agile developers & designers who want a simple, beautiful tool that makes work truly enjoyable.
 
-This Docker image can be used for running the Taiga frontend. It works together with the [beevelop/taiga-back](https://registry.hub.docker.com/u/beevelop/taiga-back/) image.
+This Docker image allows you to run the Taiga frontend. It works together with the [beevelop/taiga-back](https://registry.hub.docker.com/u/beevelop/taiga-back/) image.
 
 ## Running
 A [beevelop/taiga-back](https://registry.hub.docker.com/u/beevelop/taiga-back/) needs to be linked as `taigaback`.
 Also connect the volumes of the taiga-back container if you want to serve the static files for the admin panel.
 
 ```bash
-docker run --name taiga_front_container --link taiga_back_container:taigaback --volumes-from taiga_back_container beevelop/taiga-front
+docker run --name taiga_front -p 8080:80 --link taiga_back_container:taigaback --volumes-from taiga_back_container beevelop/taiga-front
 ```
+
+You should then be a able to access the Taiga-Frontend at `http://YOUR_HOST:8080` and login with the username `admin` and the password `123123`.
 
 ## [Docker-Compose](https://gist.github.com/beevelop/1975674c22ce8948c895#file-docker-compose-yml)
 
@@ -47,3 +49,6 @@ requests will be redirected to *https* (port 443).
 ## Debugging
 * ``DEBUG_ENTRYPOINT``: set to True to enable Debugging (`set -x`)
 * ``DEBUG`` defaults to ``false``
+
+## Credit
+This image was originally adapted from htdvisser/taiga-front-dist.
