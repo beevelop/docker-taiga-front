@@ -4,14 +4,10 @@ MAINTAINER Maik Hummel <m@ikhummel.com>
 
 WORKDIR /usr/local/taiga
 
-# NginX Configuration
-ADD *.conf /etc/nginx/
-ADD mime.types /etc/nginx/mime.types
+ENV TAIGA_VERSION 1.10.0
 
-ADD upstream.conf.tpl 	upstream.conf
-ADD conf.json 		conf.json
-ADD conf.env 		conf.env
-ADD start		start
+COPY *.conf mime.types /etc/nginx/
+COPY upstream.conf conf.json conf.env start ./
 
 RUN buildDeps='curl'; \
     set -x && \
@@ -22,7 +18,8 @@ RUN buildDeps='curl'; \
     ln -sf /dev/stdout /var/log/nginx/access.log && \
     ln -sf /dev/stderr /var/log/nginx/error.log && \
     mkdir taiga-front-dist && \
-    curl -sL 'https://github.com/taigaio/taiga-front-dist/tarball/stable' | tar xz -C taiga-front-dist --strip-components=1 && \
+    curl -sL "https://github.com/taigaio/taiga-front-dist/archive/$TAIGA_VERSION-stable.tar.gz" | tar xz -C taiga-front-dist --strip-components=1 && \
+
     cd taiga-front-dist && \
 
     # clean up
