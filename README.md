@@ -3,6 +3,8 @@
 [![ImageLayer](https://badge.imagelayers.io/beevelop/taiga-front:latest.svg)](https://imagelayers.io/?images=beevelop/taiga-front:latest)
 [![Beevelop](https://links.beevelop.com/honey-badge)](https://beevelop.com)
 
+
+![beevelop/taiga-front](/taiga.png?raw=true)
 # beevelop/taiga-front
 > [Taiga](https://taiga.io/) is a project management platform for startups and agile developers & designers who want a simple, beautiful tool that makes work truly enjoyable.
 
