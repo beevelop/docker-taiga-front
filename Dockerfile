@@ -17,6 +17,7 @@ RUN buildDeps='curl tar'; \
     ln -sf /dev/stderr /var/log/nginx/error.log && \
 
     adduser -S www-data && \
+    chown -R www-data:www-data /var/lib/nginx && \
 
     chmod +x start && \
     mkdir taiga-front-dist && \
