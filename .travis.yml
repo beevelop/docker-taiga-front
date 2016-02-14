@@ -4,6 +4,9 @@ services:
   - docker
 
 script:
-  - docker build -t beevelop/taiga-front .
-  - docker run --name taigafront -e TAIGABACK_PORT_8000_TCP_ADDR=localhost -d beevelop/taiga-front
-  - docker exec taigafront /bin/sh -c "apt-get update && apt-get install curl -y --no-install-recommends && curl -f localhost:80"
+  - docker build -t tf .
+  - docker run -d --name pg kiasaki/alpine-postgres
+  - docker run -d --name tb --link pg:postgres beevelop/taiga-back:alpine
+  - docker run --name tf --link tb:taigaback -d tf
+  - docker exec tf /bin/sh -c "apk add --no-cache curl && curl -f localhost:80"
+  - docker logs tf

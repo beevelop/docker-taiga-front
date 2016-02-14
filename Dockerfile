@@ -1,33 +1,29 @@
-FROM nginx:1.7
+FROM alpine:3.3
 
 MAINTAINER Maik Hummel <m@ikhummel.com>
 
-WORKDIR /usr/local/taiga
+ENV TAIGA_VERSION=1.10.0
 
-ENV TAIGA_VERSION 1.10.0
+WORKDIR /usr/local/taiga
 
 COPY *.conf mime.types /etc/nginx/
 COPY upstream.conf conf.json conf.env start ./
 
-RUN buildDeps='curl'; \
-    set -x && \
-    apt-get -qq update && apt-get -qq install -y $buildDeps --no-install-recommends && \
-    apt-get -qq install -y gettext-base --no-install-recommends && \
+RUN buildDeps='curl tar'; \
+    apk add --no-cache $buildDeps && \
+    apk add --no-cache gettext nginx && \
 
-    # forward request and error logs to docker log collector
     ln -sf /dev/stdout /var/log/nginx/access.log && \
     ln -sf /dev/stderr /var/log/nginx/error.log && \
+
+    adduser -S www-data && \
+
+    chmod +x start && \
     mkdir taiga-front-dist && \
     curl -sL "https://github.com/taigaio/taiga-front-dist/archive/$TAIGA_VERSION-stable.tar.gz" | tar xz -C taiga-front-dist --strip-components=1 && \
 
-    cd taiga-front-dist && \
-
-    # clean up
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
-    apt-get purge -y --auto-remove $buildDeps && \
-    apt-get autoremove -y && \
-    apt-get clean
+    apk del $buildDeps
 
 EXPOSE 80 443
 
-CMD /bin/bash /usr/local/taiga/start
+CMD ./start
