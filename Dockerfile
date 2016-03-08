@@ -11,7 +11,7 @@ COPY upstream.conf conf.json conf.env start ./
 
 RUN buildDeps='curl tar'; \
     apk add --no-cache $buildDeps && \
-    apk add --no-cache gettext nginx && \
+    apk add --no-cache gettext nginx bash && \
 
     ln -sf /dev/stdout /var/log/nginx/access.log && \
     ln -sf /dev/stderr /var/log/nginx/error.log && \
