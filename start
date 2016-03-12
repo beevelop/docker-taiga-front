@@ -8,7 +8,7 @@ fi
 
 . /opt/conf.env
 
-envsubst < conf.json > taiga-front-dist/dist/conf.json
-envsubst < upstream.conf > /etc/nginx/upstream.conf
+envsubst < /opt/conf.json > taiga-front-dist/dist/conf.json
+envsubst < /opt/upstream.conf > /etc/nginx/upstream.conf
 
 nginx -g "daemon off;"
