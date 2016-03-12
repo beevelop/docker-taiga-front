@@ -6,13 +6,7 @@ if [ -n "$DEBUG_ENTRYPOINT" ]; then
   set -x
 fi
 
-. ./conf.env
-
-sed -i "/include .*.conf;/c\  include ${WEB_CONFIG};" /etc/nginx/nginx.conf
-
-mkdir -p /etc/nginx/ssl
-[ ! -z "$SSL_CRT" ] && echo "${SSL_CRT}" > /etc/nginx/ssl/ssl.crt
-[ ! -z "$SSL_KEY" ] && echo "${SSL_KEY}" > /etc/nginx/ssl/ssl.key
+. /opt/conf.env
 
 envsubst < conf.json > taiga-front-dist/dist/conf.json
 envsubst < upstream.conf > /etc/nginx/upstream.conf

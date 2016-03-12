@@ -7,7 +7,7 @@ ENV TAIGA_VERSION=1.10.0
 WORKDIR /usr/local/taiga
 
 COPY *.conf mime.types /etc/nginx/
-COPY upstream.conf conf.json conf.env start ./
+COPY upstream.conf conf.json conf.env start /opt/
 
 RUN buildDeps='curl tar'; \
     apk add --no-cache $buildDeps && \
@@ -19,7 +19,7 @@ RUN buildDeps='curl tar'; \
     adduser -S www-data && \
     chown -R www-data:www-data /var/lib/nginx && \
 
-    chmod +x start && \
+    chmod +x /opt/start && \
     mkdir taiga-front-dist && \
     curl -sL "https://github.com/taigaio/taiga-front-dist/archive/$TAIGA_VERSION-stable.tar.gz" | tar xz -C taiga-front-dist --strip-components=1 && \
 
@@ -27,4 +27,4 @@ RUN buildDeps='curl tar'; \
 
 EXPOSE 80 443
 
-CMD ./start
+CMD /opt/start
