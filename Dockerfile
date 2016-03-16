@@ -25,6 +25,6 @@ RUN buildDeps='curl tar'; \
 
     apk del $buildDeps
 
-EXPOSE 80 443
+EXPOSE 80
 
 CMD /opt/start
