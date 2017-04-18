@@ -22,6 +22,10 @@ RUN buildDeps='curl'; \
 
     cd taiga-front-dist && \
 
+    # Handle case where distribution has files in arbitrary sub-directory
+    tmpSource=`find dist -type d -name js | sed -r 's|/[^/]+$|/*|'` && \
+    if [ "$tmpSource" != 'dist/*' ]; then mv $tmpSource dist/; fi && \
+
     # clean up
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
     apt-get purge -y --auto-remove $buildDeps && \
