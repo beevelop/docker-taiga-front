@@ -4,7 +4,7 @@ MAINTAINER Maik Hummel <m@ikhummel.com>
 
 WORKDIR /usr/local/taiga
 
-ENV TAIGA_VERSION 1.10.0
+ENV TAIGA_VERSION 3.1.0
 
 COPY *.conf mime.types /etc/nginx/
 COPY upstream.conf conf.json conf.env start ./
